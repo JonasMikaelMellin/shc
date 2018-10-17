@@ -1,0 +1,486 @@
+document.getElementById(#{toJSON aDomId}).innerHTML = "This text was added by the Javascript part of the homepage widget.";
+
+function csrfBeforeSend(request) 
+{
+    var cookieName = "#{rawJS $  unpack $ decodeUtf8 $ defaultCsrfCookieName}";
+    var cookieContent = getCookie(cookieName);
+    request.setRequestHeader(cookieName,cookieContent);
+};
+
+
+function modalEditProject(idIndex,header) {
+    var modalDialog = $('<div class="well modal fade" id="myModal-'+idIndex+'" tabindex="-1" role="dialog"></div>');
+    var modalContent = $('<div class="modal-dialog"></div>').appendTo(modalDialog);
+    var modalHeader = $('<div class="modal-header"></div>').appendTo(modalContent);
+    var modalCloseButtonTop = $('<button class="close" type="button" data-dismiss="modal"></button>').appendTo(modalHeader);
+    modalCloseButtonTop.html('&times;');
+    var modalHeaderText = $('<h4 class="modal-title"></h4>').appendTo(modalHeader);
+    modalHeaderText.text(header);
+    var modalBody = $('<div class="modal-body"></div>').appendTo(modalContent);
+    var modalFormHorizontal = $('<from class="form-horizontal"></form>').appendTo(modalBody);
+
+    // project name
+    
+    var modalFormGroup = $('<div class="form-group"></div>').appendTo(modalFormHorizontal);
+    var modalProjectNameLabel = $('<label class="col-sm-3 control-label" for="inputProjectName-'+idIndex+'"></label>').appendTo(modalFormGroup);
+    modalProjectNameLabel.text(msgProjectName());
+    var modalProjectNameInputDiv = $('<div class="col-sm-9"></div>').appendTo(modalFormGroup);
+    var modalProjectNameInput = $('<input type="text" class="form-control" id="inputProjectName-entry-'+idIndex+'" placeholder="'+msgProjectModalEditNamePlaceholder()+'"></input>').appendTo(modalProjectNameInputDiv);
+
+    // project description
+    
+    var modalFormGroup2 = $('<div class="form-group"></div>').appendTo(modalFormHorizontal);
+    var modalProjectDescriptionLabel = $('<label class="col-sm-3 control-label" for="inputProjectDescription-'+idIndex+'"></label>').appendTo(modalFormGroup2);
+    modalProjectDescriptionLabel.text(msgProjectDescription());
+    var modalProjectDescriptionInputDiv = $('<div class="col-sm-9"></div>').appendTo(modalFormGroup2);
+    var modalProjectDescriptionInput = $('<textarea class="form-control" id="inputProjectDescription-entry-'+idIndex+'" placeholder="'+msgProjectModalEditDescriptionPlaceholder()+'" rows="3"></textarea>').appendTo(modalProjectDescriptionInputDiv);
+
+    // labels for add/remove associated teams
+    
+    var modalFormGroup25 = $('<div class="form-group"></div>').appendTo(modalFormHorizontal);
+    var modal25Div1 = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup25);
+    var modal25Label1 = $('<label class="col-sm-3"></label>').appendTo(modalFormGroup25);
+    modal25Label1.text(msgProjectModalEditSelect());
+    var modal25Div2 = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup25);
+    var modal25Label2 = $('<label class="col-sm-3"></label>').appendTo(modalFormGroup25);
+    modal25Label2.text(msgProjectModalEditSelectFrom());
+
+    // add/remove associated teams
+    
+    var modalFormGroup3 = $('<div class="form-group"></div>').appendTo(modalFormHorizontal);
+    var modalProjectMemberLabel = $('<label class="col-sm-3 control-label" for="inputProjectMember-'+idIndex+'"></label>').appendTo(modalFormGroup3);
+    modalProjectMemberLabel.text(msgProjectTeam());
+
+    // select to list
+    
+    var modalProjectMemberSelectToDiv = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup3);
+    var modalProjectMemberSelectTo = $('<select multiple size="10" id="selectTo-'+idIndex+'"></select>').appendTo(modalProjectMemberSelectToDiv);
+    
+    // add buttons for adding/removing members
+
+    var modalProjectMemberSelectOperator = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup3);
+
+
+    var modalProjectMemberSelectOperatorGroupButton = $('<div class="btn-group-vertical" id="addRemove-'+idIndex+'"></div>').appendTo(modalProjectMemberSelectOperator);
+    var modalProjectMemberSelectOperatorGroupButtonAdd = $('<button type="button" class="btn btn-primary" id="addAssociatedTeam-'+idIndex+'">&lt;</button>').appendTo(modalProjectMemberSelectOperatorGroupButton);
+    var modalProjectMemberSelectOperatorGroupButtonRemove = $('<button type="button" class="btn btn-primary" id="removeAssociatedTeam-'+idIndex+'">&gt;</button>').appendTo(modalProjectMemberSelectOperatorGroupButton);
+    
+    // select from list
+    
+    var modalProjectMemberSelectFromDiv = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup3);
+    var modalProjectMemberSelectFrom = $('<select multiple size="10" id="selectFrom-'+idIndex+'"></select>').appendTo(modalProjectMemberSelectFromDiv);
+
+    // footer
+    
+    var modalFooter = $('<div class="modal-footer"></div>').appendTo(modalContent);
+    var modalCloseButton = $('<button class="btn btn-default" type="button" data-dismiss="modal"></button>').appendTo(modalFooter);
+    modalCloseButton.text(msgCommonActionCloseButton());
+    var modalSaveChangesButton = $('<button class="btn btn-primary" type="button" id="saveChangesButton-'+idIndex+'"></button>').appendTo(modalFooter);
+    modalSaveChangesButton.text(msgCommonActionSaveButton());
+   
+    return modalDialog;
+}
+
+function populateSelectTo(data,rowIndex) {
+    $('#selectTo-'+rowIndex).empty();
+
+    callAjax('@{ProjectGetInProjectTeamsR}',
+             JSON.stringify({
+                 projectGetInProjectTeamsRequestProjectUuid: data[rowIndex].augmentedProjectDataEntityProject.uuid,
+                 projectGetInProjectTeamsRequestRowIndex: rowIndex
+                     }),
+             function(resultData) { // success
+                 for (var i=0; i<resultData.projectGetInProjectTeamsResponseTeamData.length; i++) {
+                     var name = resultData.projectGetInProjectTeamsResponseTeamData[i].name;
+                     var optionNode = $('<option value="'+resultData.projectGetInProjectTeamsResponseTeamData[i].id+'">'+name+'</option>');
+                     $('#selectTo-'+rowIndex).append(optionNode);
+                 }
+             },
+             function(errorData) { // error
+                 alert(msgErrorProjectGetInProjectTeams());
+             });
+    
+}
+
+function populateSelectFrom(data,rowIndex) {
+    $('#selectFrom-'+rowIndex).empty();
+    console.log(data);
+    console.log(rowIndex);
+    callAjax('@{ProjectGetNotInProjectTeamsR}',
+             JSON.stringify({
+                 projectGetNotInProjectTeamsRequestProjectUuid: data[rowIndex].augmentedProjectDataEntityProject.uuid,
+                 projectGetNotInProjectTeamsRequestRowIndex: rowIndex
+             }),
+             function(resultData) { // success
+                 for (var i=0; i<resultData.projectGetNotInProjectTeamsResponseTeamData.length; i++) {
+                     var name = resultData.projectGetNotInProjectTeamsResponseTeamData[i].name;
+                     var optionNode = $('<option value="'+resultData.projectGetNotInProjectTeamsResponseTeamData[i].id+'">'+name+'</option>');
+                     $('#selectFrom-'+rowIndex).append(optionNode);
+                 }
+             },
+             function(errorData) { // error
+                 alert(msgErrorGetNotInTeamUsers());
+             });
+
+
+}
+
+
+
+
+function updateTable(data) {
+    console.log("Success: "+data);
+
+    // clear table entries
+    $("##{rawJS projectListId} > tbody").html("");
+
+    var ownerCell = [];
+    var associatedTeamCell = [];
+    var tableRef =  $("##{rawJS projectListId}").find('tbody');
+    for (var i = 0; i < data.length; i++) {
+        var newRow = $('<tr class="table" style="background-color: lightblue;" id="js-1-'+data[i].augmentedProjectDataEntityProject.uuid+'" uuid="'+data[i].augmentedProjectDataEntityProject.uuid+'"></tr>').appendTo($("##{rawJS projectListId}"))
+        var nameCell = $('<td></td>').appendTo(newRow);
+        ownerCell.push( $('<td></td>').appendTo(newRow));
+        var descriptionCell = $('<td></td>').appendTo(newRow);
+        associatedTeamCell.push( $('<dt></td>').appendTo(newRow));
+        callAjax('@{ProjectGetAssociatedTeamsR}',
+                 JSON.stringify({
+                     projectGetAssociatedTeamsRequestProjectId: data[i].augmentedProjectDataEntityProject.id,
+                     projectGetAssociatedTeamsRequestRowId: i
+                 }),
+                 function(data2) {
+                     var l = data2.projectGetAssociatedTeamsResponseEntityTeamData.length;
+                     if ( l < 1) {
+                         associatedTeamCell[data2.projectGetAssociatedTeamsResponseRowId].text("");
+                     } else {
+                         var associatedTeamList = $('<ul></ul>').appendTo(associatedTeamCell[data2.projectGetAssociatedTeamsResponseRowId]);
+                         for (var j = 0; j < l; j++) {
+                             var listItem = $('<li></li>').appendTo(associatedTeamList);
+                             listItem.text(data2.projectGetAssociatedTeamsResponseEntityTeamData[j].name);
+                             
+                         }
+                     }
+                 },
+                 function(data2) {
+                     alert(msgErrorGetAssociatedTeams());
+                     return;
+                     
+                 }
+                );
+        
+        var buttonCell = $('<td></td>').appendTo(newRow);
+        var buttonForm = $('<form class="form-horizontal"></form>').appendTo(buttonCell);
+        var buttonField = $('<div class="field btn-group-toggle" data-toggle="buttons"></field>').appendTo(buttonForm);
+        var buttonLabel = $('<label class="btn btn-secondary" active></label>').appendTo(buttonField);
+        if (data[i].augmentedProjectDataIsOwner) {
+            var buttonInput = $('<input id="js-2-project-radioButton-'+data[i].augmentedProjectDataEntityProject.name+'" type="checkbox"  checked autocomplete="off"></input>').appendTo(buttonLabel);
+            buttonLabel.html(buttonInput);
+            
+        }
+        buttonLabel.append(document.createTextNode(msgCommonActionMarkButton()));
+        var editButtonCell = $('<td></td>').appendTo(newRow);
+        var inputGroupButton = $('<div class="input-group-btn"></div>').appendTo(editButtonCell);
+        if (data[i].augmentedProjectDataIsOwner) {
+            var editButtonInput = $('<button class="btn btn-secondary" id="js-2-project-editButton-'+data[i].augmentedProjectDataEntityProject.name+'" type="submit"></button>').appendTo(inputGroupButton);
+            editButtonInput.text(msgCommonActionEditButton);
+        }
+        var modal = modalEditProject(i,msgProjectModalEditTitle());
+        $('##{rawJS projectModalAddPointId}').append(modal);
+        nameCell.text(data[i].augmentedProjectDataEntityProject.name);
+        callAjax('@{UserGetUserR}',
+                 JSON.stringify({
+                     userGetUserRequestUserId: data[i].augmentedProjectDataEntityProject.owner,
+                     userGetUserRequestRowId: i
+                 }),
+                 function(data2) {
+                     if (data2.userGetUserResponseEntityUserData.length < 1) {
+                         ownerCell[data2.userGetUserResponseRowId].text(data[data2.userGetUserResponseRowId].owner);
+                     } else {
+                         ownerCell[data2.userGetUserResponseRowId].text(data2.userGetUserResponseEntityUserData[0].ident);
+                     }
+                 },
+                 function(data2) {
+                     alert(msgErrorGetUser());
+                     return;
+                     
+                 }
+                );
+        descriptionCell.text(data[i].augmentedProjectDataEntityProject.description);
+        $("#js-2-project-radioButton-"+data[i].augmentedProjectDataEntityProject.name).prop('checked',false);
+
+        // open modal window handling:
+        
+        let tmp = i;
+        $("#js-2-project-editButton-"+data[i].augmentedProjectDataEntityProject.name).off("click");
+        $("#js-2-project-editButton-"+data[i].augmentedProjectDataEntityProject.name).click(function(event) {
+            event.preventDefault();
+            $('#inputProjectName-entry-'+tmp).val(data[tmp].augmentedProjectDataEntityProject.name);
+            $('#inputProjectDescription-entry-'+tmp).val(data[tmp].augmentedProjectDataEntityProject.description);
+            // populate with users not in team
+            populateSelectFrom(data,tmp);
+            // populate with user in the team
+            populateSelectTo(data,tmp);
+            $('#myModal-'+tmp).modal();
+        });
+         $('#myModal-'+tmp).off("hide.bs.modal");
+         $('#myModal-'+tmp).on('hide.bs.modal',function(event) {
+             updateTable(data);
+         });
+        // save modal
+        $('#saveChangesButton-'+tmp).off("click");
+        $('#saveChangesButton-'+tmp).click(function(event) {
+            event.preventDefault();
+            callAjax('@{ProjectUpdateProjectR}',
+                     JSON.stringify({
+                         projectUpdateProjectRequestProjectUuid: data[tmp].augmentedProjectDataEntityProject.uuid
+                         , projectUpdateProjectRequestProjectName: $('#inputProjectName-entry-'+tmp).val()
+                         , projectUpdateProjectRequestProjectDescription: $('#inputProjectDescription-entry-'+tmp).val()
+                     }),
+                     function(projectUpdateData) { // success
+                         updateTable(projectUpdateData);
+                     },
+                     function(projectUpdateData) { // error
+                         alert(msgErrorProjectUpdateProject());
+                     });
+            $('#myModal-'+tmp).modal("hide");
+        });
+        // add team member
+        $('#addAssociatedTeam-'+i).off("click");
+        $('#addAssociatedTeam-'+i).click(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+            var selected = $('#selectFrom-'+tmp).val();
+            if (selected === null) {
+                alert(msgErrorProjectAssociatedTeamAdditionNotSelected());
+            } else {
+                var selectedId = [];
+                for (var j=0; j<selected.length; j++) {
+                    selectedId.push(parseInt(selected[j]));
+                }
+                callAjax('@{ProjectAddTeamToProjectR}',
+                         JSON.stringify({
+                             projectAddTeamToProjectRequestTeamIds: selectedId,
+                             projectAddTeamToProjectRequestProjectUuid: data[tmp].augmentedProjectDataEntityProject.uuid
+                         }),
+                         function(teamData) { // success
+                             console.log("Added user: "+teamData);
+                             // populate with users not in team
+                             populateSelectFrom(data,tmp);
+                             // populate with user in the team
+                             populateSelectTo(data,tmp);
+                             
+                         },
+                         function(data) { // error
+                             alert(msgErrorProjectAssociatedTeamAdditionError());
+                         });
+            }
+        });
+        // remove team member
+        $('#removeAssociatedTeam-'+i).off("click");
+        $('#removeAssociatedTeam-'+i).click(function(event) {
+            event.stopPropagation();
+            console.log("Remove team member");
+            console.log(event);
+            event.preventDefault();
+            console.log("remove "+tmp);
+            var selected = $('#selectTo-'+tmp).val();
+            if (selected === null) {
+                alert(msgErrorProjectAssociatedTeamRemovalNotSelected());
+            } else {
+                var selectedId = [];
+                for (var j=0; j<selected.length; j++) {
+                    selectedId.push(parseInt(selected[j]));
+                }
+                callAjax('@{ProjectRemoveTeamFromProjectR}',
+                         JSON.stringify({
+                             projectRemoveTeamFromProjectRequestTeamIds: selectedId,
+                             projectRemoveTeamFromProjectRequestProjectUuid: data[tmp].augmentedProjectDataEntityProject.uuid
+                         }),
+                         function(teamData) { // success
+                             console.log("Removed user: "+teamData);
+                             // populate with users not in team
+                             populateSelectFrom(data,tmp);
+                             // populate with user in the team
+                             populateSelectTo(data,tmp);
+                             
+                             console.log("Yehaaw");
+                         },
+                         function(data) { // error
+                             alert(msgErrorProjectAssociatedTeamRemovalError());
+                         });
+            }
+        });
+    
+
+    }
+};
+
+
+
+function doActualWorkWhenReady() {
+    callAjax('@{ProjectListGetProjectsR}',
+             JSON.stringify({
+                 requestId: 1
+             }),
+             updateTable,
+             function (data) {
+                 alert(msgErrorProjectGetProjects());
+             }
+            );
+    // register a new project
+    
+    $("##{rawJS projectRegisterProjectButtonId}").click(function(event) {
+        event.preventDefault();
+        console.log("Register project");
+        var message = $("##{rawJS projectCreateEntryId}").val();
+        var desc = $("##{rawJS projectCreateEntryDescriptionId}").val();
+        // (Browsers that enforce the "required" attribute on the textarea won't see this alert)
+        if (!message) {
+            alert("#{rawJS $ renderMessage master [] MsgAlertFeedInProjectName}");
+            return;
+        }
+
+        // Make an AJAX request to the server to create a new project
+        // if it is successful, then update the table displaying projects
+        // otherwise, display an error message
+        
+        callAjax('@{ProjectListR}', // URL
+                 JSON.stringify({   // parameters
+                     projectAddProjectRequestName: message,
+                     projectAddProjectRequestDescription: desc
+                 }),
+                 function (data) { // success
+                     
+                     // Update the displayed table of projects by requesting all
+                     // projects and, if successful, replace the currently displayed
+                     // projects with the result of the query.
+                     // This is far simpler than locating where to insert the
+                     // new row and insert it.
+                     
+                     callAjax('@{ProjectListGetProjectsR}', // URL
+                              JSON.stringify({ // parameters
+                                  requestId: 1
+                              }),
+                              updateTable,
+                              function (data) { // error
+                                  // Could not obtain current list of projects
+                                  alert("#{rawJS $ renderMessage master [] MsgErrorRemoveProjects}");
+                                  console.log("Error creating comment: " + data);
+                              }
+                             );
+
+                     // clear the fields for new input
+                     
+                     $("##{rawJS projectCreateEntryId}").val("");
+                     $("##{rawJS projectCreateEntryDescriptionId}").val("");
+
+                 },
+                 function (data) { // error
+                     alert("#{rawJS $ renderMessage master [] MsgErrorCreateProject}");
+                     console.log("Error creating comment: " + data);
+                 }
+                );
+
+    });
+
+
+    // remove projects
+    //
+    // first, get all projects from the server
+    // second, check which of these has been marked for removal
+    // third, ask for confirmation
+    // fourth, if ok, then request removal of selected projects
+    // fifth remove them from the table
+    
+    var removeList = [];
+    var uuidRemoveList = [];
+    var answer = false;
+    
+
+    $("##{rawJS projectDeleteProjectButtonId}").click(function(event) {
+        event.preventDefault();
+        // Make an AJAX request to the server to get all project names
+        callAjax('@{ProjectListGetProjectsR}', // URL
+                 JSON.stringify({ // parameters
+                     requestId: 1
+                 }),
+                 function (data) { // success
+                     var tableRef =  $("##{rawJS projectListId}").find('tbody');
+                     console.log(tableRef);
+                     console.log(data);
+                     for (var i = 0; i < data.length; i++) {
+                         name = data[i].augmentedProjectDataEntityProject.name;
+                         label = '#js-2-project-radioButton-' + name;
+                         var isChecked = $(label).is(':checked');
+                         if (isChecked) {
+                             removeList.push(name);
+                             uuidRemoveList.push(data[i].augmentedProjectDataEntityProject.uuid);
+                             console.log('Remove '+name);
+                         } else {
+                             console.log('Do not remove '+name);
+                         }
+                     }
+                     if (removeList.length === 0) {
+                         alert(msgCommonAlertNothingShouldBeRemoved());
+                         return;
+                     }
+                     var msg = '';
+                     for (var i = 0; i < removeList.length; i++) {
+                         msg = msg + removeList[i];
+                         if (i < removeList.length-1) {
+                             msg = msg + ", ";
+                         }
+                     }
+                     answer = confirm(msgConfirmRemoveTeam()+": "+msg);
+                     if (answer) {
+                         // Make an AJAX request to the server to get all project names
+                         callAjax('@{ProjectListRemoveProjectsR}', // URL
+                                  JSON.stringify({ // Parameters
+                                      projectRemoveProjectsRequestListOfProjects: uuidRemoveList
+                                  }),
+                                  function (data) { // success
+                                      console.log("Objects are now removed");
+                                      for (var i = 0; i < removeList.length; i++) {
+                                          var ref = "#js-1-"+uuidRemoveList[i];
+                                          $(ref).remove();
+                                      }
+                                  }, 
+                                  function (data) { // failure
+                                      alert(msgErrorRemoveTeams());
+                                      console.log("Error creating comment: " + data);
+                                  }
+                                 );
+                     }
+                 },
+                 function (data) { // error
+                     alert(msgErrorRemoveProjects());
+                     console.log("Error creating comment: " + data);
+                 }
+                );
+        
+    });
+    removeList = []; // empty the list
+    uuidRemoveList = [];
+
+}
+
+
+
+$(function() {
+    $("##{rawJS aDomId}").remove(); // remove message that JavaScript is turned off
+    callAjax('@{PreferencesGetPreferencesR}',
+             JSON.stringify({
+                 preferencesGetPreferencesRequestUserId: #{rawJS uidSqlKey}
+             }),
+             function(data) {
+                 languageCode = data[0].language;
+                 doActualWorkWhenReady();
+             },
+             function(data) {
+                 alert(msgErrorGetPreferences());
+                 doActualWorkWhenReady();
+             }
+            );
+
+});
+

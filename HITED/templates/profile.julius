@@ -1,0 +1,53 @@
+
+
+function csrfBeforeSend(request) 
+{
+    var cookieName = "#{rawJS $  unpack $ decodeUtf8 $ defaultCsrfCookieName}";
+    var cookieContent = getCookie(cookieName);
+    request.setRequestHeader(cookieName,cookieContent);
+};
+
+$(function() {
+    callAjax('@{PreferencesGetPreferencesR}',
+             JSON.stringify({
+                 preferencesGetPreferencesRequestUserId: #{rawJS uidSqlKey}
+             }),
+             function(data) {
+                 if (data[0].language === "sv") {
+                     $("##{rawJS profileLanguageChoice}").html('Svenska<span class="caret"></span>');
+                 } else {
+                     $("##{rawJS profileLanguageChoice}").html('English<span class="caret"></span>');
+                 }
+             },
+             function(data) {
+                 alert(msgErrorGetPreferences())
+             }
+            );
+    $('.dropdown-menu').on('click','a', function(event) {
+        var text = this.text;
+        var href = this.href;
+
+        var languageCodeInProfile;
+        if (href.endsWith("#swedish")) {
+            languageCodeInProfile="sv";
+        } else if (href.endsWith("#english")) {
+            languageCodeInProfile="en";
+        } else {
+            alert(msgProfileErrorChangeLanguageChoice());
+        }
+        console.log(href);
+        console.log(languageCode);
+        callAjax('@{ProfileChangeLanguageR}',
+                 JSON.stringify({
+                     requestLanguageCode: languageCodeInProfile
+                 }),
+                 function(data) { // success
+                     alert(msgProfileChangeLanguageSuccess());
+                     location.reload(true);
+                 },
+                 function(data) { // error
+                     alert(msgProfileErrorChangeLanguageSetting());
+                 });
+    });
+                          
+});

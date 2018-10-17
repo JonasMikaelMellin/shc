@@ -1,0 +1,66 @@
+<script src=@{StaticR js_getCookie_js}>
+<script src=@{StaticR js_callAjax_js}>
+<div .jumbotron>
+  <div .container>
+      <div .row>
+          <h1 .display-4>_{MsgProjectListRTitle}
+<div .container>
+    <div .bs-docs-section>
+        <div .row>
+            <div .col-xl-3>
+                <div .page-header>
+                    <div .max-height>
+                        <table .table   ##{projectListId} style="height=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <thead>
+                                <tr>
+                                    <th>_{MsgProjectName}
+                                    <th>_{MsgProjectOwner}
+                                    <th>_{MsgProjectDescription}
+                                    <th>_{MsgProjectTeam}
+                                    <th>_{MsgCommonActionMarkState}
+                                    <th>_{MsgCommonActionEdit}
+                            <tbody>
+                                $forall project <- allProjects
+                                    <tr ##{"js-1-" ++ (projectUuid $ entityVal project)}>
+                                        <td>#{projectName $ entityVal project}
+                                        <td>
+                                        <td>#{projectDescription $ entityVal project}
+                                        <td>
+                                        <td>
+                                            <form .form-horizontal  ##{"js-2-" ++ (projectName $ entityVal project)}>
+                                                <div .field .btn-group-toggle data-toggle="buttons">
+                                                    <label .btn .btn-secondary active>
+                                                        <input  ##{"js-2-project-radioButton-" ++ (projectName $ entityVal project)} type="checkbox" autocomplete="off">_{MsgCommonActionMarkButton}
+                                        <td>
+                                            <form .form-horizontal type="button" ##{"js-2-project-editButton-" ++ (projectName $ entityVal $  project) }  data-toggle="modal" data-target="#myModal">_{MsgCommonActionEditButton}                                                       
+         <div .row>
+             <div .col-xl-6>
+                <div .bs-callout bs-callout-info well>
+                    <form  ##{projectFormId}>
+                        <div .input-group>
+                            <div .form-group>
+                                <label>_{MsgProjectName}:
+                                <input ##{projectCreateEntryId} placeholder="Mata in projektnamn h&auml;r" required maxlength="255">
+                            <div .form-group>
+                                <label>_{MsgProjectDescription}:
+                                <textarea ##{projectCreateEntryDescriptionId} rows="3">
+                        <div .input-group-btn>
+                            <button ##{projectRegisterProjectButtonId} .btn.btn-primary type="submit">
+                               _{MsgActionRegisterProjectButton}
+                            <button ##{projectDeleteProjectButtonId} .btn .btn-primary type="submit">
+                               _{MsgActionRemoveProjectButton}
+                        
+        <div .row ##{aDomId}>
+            <div .col-xl-12>
+                <div .bs-callout bs-callout-info well>
+                    <li .list-group-item >
+                        _{MsgCommonTextJavascriptDisabled}
+
+        <div .row >
+            <div .col-sm-12  ##{projectModalAddPointId}>

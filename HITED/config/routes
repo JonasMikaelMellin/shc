@@ -1,0 +1,46 @@
+-- By default this file is used by `parseRoutesFile` in Foundation.hs
+-- Syntax for this file here: https://www.yesodweb.com/book/routing-and-handlers
+
+/static StaticR Static appStatic
+/auth   AuthR   Auth   getAuth
+
+/favicon.ico FaviconR GET
+/robots.txt RobotsR GET
+
+/ HomeR GET POST
+
+/comments CommentR POST
+
+/profile ProfileR GET
+/profileChangeLanguage ProfileChangeLanguageR POST
+
+/preferencesGetPreferences PreferencesGetPreferencesR POST
+
+/projectList ProjectListR GET POST
+
+/projectListGetProjects ProjectListGetProjectsR POST
+/projectGetProjectsInWhichUserOnlyParticipates ProjectGetProjectsInWhichUserOnlyParticipatesR POST
+
+/projectListRemoveProjects ProjectListRemoveProjectsR POST
+
+/projectGetAssociatedTeams ProjectGetAssociatedTeamsR POST
+/projectUpdateProject ProjectUpdateProjectR POST
+
+/projectAddTeamToProject ProjectAddTeamToProjectR POST
+
+/projectRemoveTeamFromProject ProjectRemoveTeamFromProjectR POST
+
+/projectGetInProjectTeams ProjectGetInProjectTeamsR POST
+/projectGetNotInProjectTeams ProjectGetNotInProjectTeamsR POST
+
+/team TeamR GET POST
+/teamGetTeams TeamGetTeamsR POST
+/teamRemoveTeams TeamRemoveTeamsR POST
+/teamGetTeamMembers TeamGetTeamMembersR POST
+/teamAddUserToTeam TeamAddUserToTeamR POST
+/teamRemoveUserFromTeam TeamRemoveUserFromTeamR POST
+/teamUpdateTeam TeamUpdateTeamR POST
+
+/userGetUser UserGetUserR POST
+/userGetNotInTeamUsers UserGetNotInTeamUsersR POST
+/userGetInTeamUsers UserGetInTeamUsersR POST

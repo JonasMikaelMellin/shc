@@ -1,0 +1,505 @@
+document.getElementById(#{toJSON aDomId}).innerHTML = "";
+
+function csrfBeforeSend(request) 
+{
+    var cookieName = "#{rawJS $  unpack $ decodeUtf8 $ defaultCsrfCookieName}";
+    var cookieContent = getCookie(cookieName);
+    request.setRequestHeader(cookieName,cookieContent);
+};
+
+function modalHtml(idText,header,bodyText) {
+    var modalDialog = $('<div class="bs-callout bs-callout-info well modal fade" id="myModal-'+idText+'" role="dialog"></div>');
+    var modalContent = $('<div class="modal-dialog"></div>').appendTo(modalDialog);
+    var modalHeader = $('<div class="modal-header"></div>').appendTo(modalContent);
+    var modalCloseButtonTop = $('<button class="close" type="button" data-dismiss="modal"></button>').appendTo(modalHeader);
+    modalCloseButtonTop.html('&times;');
+    var modalHeaderText = $('<h4 class="modal-title"></h4>').appendTo(modalHeader);
+    modalHeaderText.text(header);
+    var modalBody = $('<div class="modal-body"></div>').appendTo(modalContent);
+    modalBody.text(bodyText);
+    var modalFooter = $('<div class="modal-footer"></div>').appendTo(modalContent);
+    var modalCloseButton = $('<button class="btn btn-default" type="button" data-dismiss="modal"></button>').appendTo(modalFooter);
+    modalCloseButton.text("Close");
+    return modalDialog;
+    
+};
+
+function modalEditTeam(idIndex,header) {
+    var modalDialog = $('<div class="well modal fade" id="myModal-'+idIndex+'" tabindex="-1" role="dialog"></div>');
+    var modalContent = $('<div class="modal-dialog"></div>').appendTo(modalDialog);
+    var modalHeader = $('<div class="modal-header"></div>').appendTo(modalContent);
+    var modalCloseButtonTop = $('<button class="close" type="button" data-dismiss="modal"></button>').appendTo(modalHeader);
+    modalCloseButtonTop.html('&times;');
+    var modalHeaderText = $('<h4 class="modal-title"></h4>').appendTo(modalHeader);
+    modalHeaderText.text(header);
+    var modalBody = $('<div class="modal-body"></div>').appendTo(modalContent);
+    var modalFormHorizontal = $('<from class="form-horizontal"></form>').appendTo(modalBody);
+
+    // team name
+    
+    var modalFormGroup = $('<div class="form-group"></div>').appendTo(modalFormHorizontal);
+    var modalTeamNameLabel = $('<label class="col-sm-3 control-label" for="inputTeamName-'+idIndex+'"></label>').appendTo(modalFormGroup);
+    modalTeamNameLabel.text(msgTeamName);
+    var modalTeamNameInputDiv = $('<div class="col-sm-9"></div>').appendTo(modalFormGroup);
+    var modalTeamNameInput = $('<input type="text" class="form-control" id="inputTeamName-entry-'+idIndex+'" placeholder="'+msgTeamModalEditTeamNamePlaceholder()+'"></input>').appendTo(modalTeamNameInputDiv);
+
+    // team description
+    
+    var modalFormGroup2 = $('<div class="form-group"></div>').appendTo(modalFormHorizontal);
+    var modalTeamDescriptionLabel = $('<label class="col-sm-3 control-label" for="inputTeamDescription-'+idIndex+'"></label>').appendTo(modalFormGroup2);
+    modalTeamDescriptionLabel.text(msgTeamDescription);
+    var modalTeamDescriptionInputDiv = $('<div class="col-sm-9"></div>').appendTo(modalFormGroup2);
+    var modalTeamDescriptionInput = $('<textarea class="form-control" id="inputTeamDescription-entry-'+idIndex+'" placeholder="'+msgTeamModalEditTeamDescriptionPlaceholder()+'" rows="3"></textarea>').appendTo(modalTeamDescriptionInputDiv);
+
+    // labels for add/remove team members
+    
+    var modalFormGroup25 = $('<div class="form-group"></div>').appendTo(modalFormHorizontal);
+    var modal25Div1 = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup25);
+    var modal25Label1 = $('<label class="col-sm-3"></label>').appendTo(modalFormGroup25);
+    modal25Label1.text(msgTeamModalEditTeamSelect());
+    var modal25Div2 = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup25);
+    var modal25Label2 = $('<label class="col-sm-3"></label>').appendTo(modalFormGroup25);
+    modal25Label2.text(msgTeamModalEditTeamSelectFrom());
+
+    // add/remove team members
+    
+    var modalFormGroup3 = $('<div class="form-group"></div>').appendTo(modalFormHorizontal);
+    var modalTeamMemberLabel = $('<label class="col-sm-3 control-label" for="inputTeamMember-'+idIndex+'"></label>').appendTo(modalFormGroup3);
+    modalTeamMemberLabel.text(msgTeamMember());
+
+    // select to list
+    
+    var modalTeamMemberSelectToDiv = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup3);
+    var modalTeamMemberSelectTo = $('<select multiple size="10" id="selectTo-'+idIndex+'"></select>').appendTo(modalTeamMemberSelectToDiv);
+    
+    // add buttons for adding/removing members
+
+    var modalTeamMemberSelectOperator = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup3);
+
+
+    var modalTeamMemberSelectOperatorGroupButton = $('<div class="btn-group-vertical" id="addRemove-'+idIndex+'"></div>').appendTo(modalTeamMemberSelectOperator);
+    var modalTeamMemberSelectOperatorGroupButtonAdd = $('<button type="button" class="btn btn-primary" id="addTeamMember-'+idIndex+'">&lt;</button>').appendTo(modalTeamMemberSelectOperatorGroupButton);
+    var modalTeamMemberSelectOperatorGroupButtonRemove = $('<button type="button" class="btn btn-primary" id="removeTeamMember-'+idIndex+'">&gt;</button>').appendTo(modalTeamMemberSelectOperatorGroupButton);
+    
+    // select from list
+    
+    var modalTeamMemberSelectFromDiv = $('<div class="col-sm-3"></div>').appendTo(modalFormGroup3);
+    var modalTeamMemberSelectFrom = $('<select multiple size="10" id="selectFrom-'+idIndex+'"></select>').appendTo(modalTeamMemberSelectFromDiv);
+
+    // footer
+    
+    var modalFooter = $('<div class="modal-footer"></div>').appendTo(modalContent);
+    var modalCloseButton = $('<button class="btn btn-default" type="button" data-dismiss="modal"></button>').appendTo(modalFooter);
+    modalCloseButton.text(msgCommonActionCloseButton());
+    var modalSaveChangesButton = $('<button class="btn btn-primary" type="button" id="saveChangesButton-'+idIndex+'"></button>').appendTo(modalFooter);
+    modalSaveChangesButton.text(msgCommonActionSaveButton());
+   
+    return modalDialog;
+}
+
+function populateSelectTo(data,rowIndex) {
+    $('#selectTo-'+rowIndex).empty();
+
+    callAjax('@{UserGetInTeamUsersR}',
+             JSON.stringify({
+                 getInTeamUsersRequestTeamName: data[rowIndex].name,
+                 getInTeamUsersRequestRowId: rowIndex
+                     }),
+             function(resultData) { // success
+                 for (var i=0; i<resultData.getInTeamUsersResponseUserData.length; i++) {
+                     var name = resultData.getInTeamUsersResponseUserData[i].ident;
+                     var optionNode = $('<option value="'+resultData.getInTeamUsersResponseUserData[i].id+'">'+name+'</option>');
+                     $('#selectTo-'+rowIndex).append(optionNode);
+                 }
+             },
+             function(errorData) { // error
+                 alert(msgErrorGetInTeamUsers());
+             });
+    
+}
+
+function populateSelectFrom(data,rowIndex) {
+    $('#selectFrom-'+rowIndex).empty();
+    console.log(data);
+    console.log(rowIndex);
+    callAjax('@{UserGetNotInTeamUsersR}',
+             JSON.stringify({
+                 getNotInTeamUsersRequestTeamName: data[rowIndex].name,
+                 getNotInTeamUsersRequestRowId: rowIndex
+             }),
+             function(resultData) { // success
+                 for (var i=0; i<resultData.getNotInTeamUsersResponseUserData.length; i++) {
+                     var name = resultData.getNotInTeamUsersResponseUserData[i].ident;
+                     var optionNode = $('<option value="'+resultData.getNotInTeamUsersResponseUserData[i].id+'">'+name+'</option>');
+                     $('#selectFrom-'+rowIndex).append(optionNode);
+                 }
+             },
+             function(errorData) { // error
+                 alert(msgErrorGetNotInTeamUsers());
+             });
+
+
+}
+
+function updateTable(data) {
+    console.log("Success: "+data);
+    $("##{rawJS teamListId} > tbody").html("");
+    var ownerCell = [];
+    var teamMemberCell = [];
+    var tableRef =  $("##{rawJS teamListId}").find('tbody');
+    for (var i = 0; i < data.length; i++) {
+        var newRow = $('<tr class="table" style="background-color: lightblue;" id="js-1-'+data[i].augmentedTeamDataEntityTeam.uuid+'" uuid="'+data[i].augmentedTeamDataEntityTeam.uuid+'"></tr>').appendTo($("##{rawJS teamListId}"))
+        var nameCell = $('<td></td>').appendTo(newRow);
+        ownerCell.push( $('<td></td>').appendTo(newRow));
+        var descriptionCell = $('<td></td>').appendTo(newRow);
+        teamMemberCell.push( $('<dt></td>').appendTo(newRow));
+        callAjax('@{TeamGetTeamMembersR}',
+                 JSON.stringify({
+                     teamGetTeamMembersRequestTeamId: data[i].augmentedTeamDataEntityTeam.id,
+                     teamGetTeamMembersRequestRowId: i
+                 }),
+                 function(data2) {
+                     if (data2.responseEntityTeamData.length < 1) {
+                         teamMemberCell[data2.responseRowId].text("");
+                     } else {
+                         var teamMemberList = $('<ul></ul>').appendTo(teamMemberCell[data2.responseRowId]);
+                         for (var j = 0; j < data2.responseEntityTeamData.length; j++) {
+                             var listItem = $('<li></li>').appendTo(teamMemberList);
+                             listItem.text(data2.responseEntityTeamData[j].ident);
+                             
+                         }
+                     }
+                 },
+                 function(data2) {
+                     alert(msgErrorGetTeamMembers());
+                     return;
+                     
+                 }
+                );
+        
+        var buttonCell = $('<td></td>').appendTo(newRow);
+        var buttonForm = $('<form class="form-horizontal"></form>').appendTo(buttonCell);
+        var buttonField = $('<div class="field btn-group-toggle" data-toggle="buttons"></field>').appendTo(buttonForm);
+        var buttonLabel = $('<label class="btn btn-secondary" active></label>').appendTo(buttonField);
+        if (data[i].augmentedTeamDataIsOwner) {
+            var buttonInput = $('<input id="js-2-team-radioButton-'+data[i].augmentedTeamDataEntityTeam.name+'" type="checkbox"  checked autocomplete="off"></input>').appendTo(buttonLabel);
+            buttonLabel.html(buttonInput);
+        } else {
+            buttonCell.prop('disabled',true);
+        }
+        buttonLabel.append(document.createTextNode(msgCommonActionMarkButton()));
+        var editButtonCell = $('<td></td>').appendTo(newRow);
+        var inputGroupButton = $('<div class="input-group-btn"></div>').appendTo(editButtonCell);
+        if (data[i].augmentedTeamDataIsOwner) {
+            var editButtonInput = $('<button class="btn btn-secondary" id="js-2-team-editButton-'+data[i].augmentedTeamDataEntityTeam.name+'" type="submit"></button>').appendTo(inputGroupButton);
+            editButtonInput.text(msgCommonActionEditButton);
+        } else {
+            editButtonCell.prop('disabled',true);
+        }
+        var modal = modalEditTeam(i,msgTeamModalEditTitle());
+        $('##{rawJS teamModalAddPointId}').append(modal);
+        nameCell.text(data[i].augmentedTeamDataEntityTeam.name);
+        callAjax('@{UserGetUserR}',
+                 JSON.stringify({
+                     userGetUserRequestUserId: data[i].augmentedTeamDataEntityTeam.owner,
+                     userGetUserRequestRowId: i
+                 }),
+                 function(data2) {
+                     if (data2.userGetUserResponseEntityUserData.length < 1) {
+                         ownerCell[data2.userGetUserResponseRowId].text(data[data2.userGetUserResponseRowId].owner);
+                     } else {
+                         ownerCell[data2.userGetUserResponseRowId].text(data2.userGetUserResponseEntityUserData[0].ident);
+                     }
+                 },
+                 function(data2) {
+                     alert(msgErrorGetUser());
+                     return;
+                     
+                 }
+                );
+        descriptionCell.text(data[i].augmentedTeamDataEntityTeam.description);
+        $("#js-2-team-radioButton-"+data[i].augmentedTeamDataEntityTeam.name).prop('checked',false);
+
+        // open modal window handling:
+        
+        let tmp = i;
+        $("#js-2-team-editButton-"+data[i].augmentedTeamDataEntityTeam.name).off("click");
+        $("#js-2-team-editButton-"+data[i].augmentedTeamDataEntityTeam.name).click(function(event) {
+            event.preventDefault();
+            $('#inputTeamName-entry-'+tmp).val(data[tmp].augmentedTeamDataEntityTeam.name);
+            $('#inputTeamDescription-entry-'+tmp).val(data[tmp].augmentedTeamDataEntityTeam.description);
+            // populate with users not in team
+            populateSelectFrom(data,tmp);
+            // populate with user in the team
+            populateSelectTo(data,tmp);
+            $('#myModal-'+tmp).modal();
+        });
+        $('#myModal-'+tmp).off("hide.bs.modal");
+        $('#myModal-'+tmp).on('hide.bs.modal',function(event) {
+            updateTable(data);
+            
+        });
+        // save modal
+        $('#saveChangesButton-'+tmp).off("click");
+        $('#saveChangesButton-'+tmp).click(function(event) {
+            event.preventDefault();
+            callAjax('@{TeamUpdateTeamR}',
+                     JSON.stringify({
+                         teamUpdateTeamRequestTeamUuid: data[tmp].augmentedTeamDataEntityTeam.uuid
+                         , teamUpdateTeamRequestTeamName: $('#inputTeamName-entry-'+tmp).val()
+                         , teamUpdateTeamRequestTeamDescription: $('#inputTeamDescription-entry-'+tmp).val()
+                     }),
+                     function(teamUpdateData) { // success
+                         updateTable(teamUpdateData);
+                     },
+                     function(teamUpdateData) { // error
+                         alert(msgErrorTeamUpdateTeam());
+                     });
+            $('#myModal-'+tmp).modal("hide");
+        });
+        // add team member
+        $('#addTeamMember-'+i).off("click");
+        $('#addTeamMember-'+i).click(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+            var selected = $('#selectFrom-'+tmp).val();
+            if (selected === null) {
+                alert(msgErrorTeamMemberAdditionNotSelected());
+            } else {
+                var selectedId = [];
+                for (var j=0; j<selected.length; j++) {
+                    selectedId.push(parseInt(selected[j]));
+                }
+                callAjax('@{TeamAddUserToTeamR}',
+                         JSON.stringify({
+                             teamAddUserToTeamRequestUserIds: selectedId,
+                             teamAddUserToTeamRequestTeamUuid: data[tmp].augmentedTeamDataEntityTeam.uuid
+                         }),
+                         function(userData) { // success
+                             console.log("Added user: "+userData);
+                             // populate with users not in team
+                             populateSelectFrom(data,tmp);
+                             // populate with user in the team
+                             populateSelectTo(data,tmp);
+                             
+                         },
+                         function(data) { // error
+                             alert(msgErrorTeamMemberAdditionError());
+                         });
+            }
+        });
+        // remove team member
+        $('#removeTeamMember-'+i).off("click");
+        $('#removeTeamMember-'+i).click(function(event) {
+            event.stopPropagation();
+            console.log("Remove team member");
+            console.log(event);
+            event.preventDefault();
+            console.log("remove "+tmp);
+            var selected = $('#selectTo-'+tmp).val();
+            if (selected === null) {
+                alert(msgErrorTeamMemberRemovalNotSelected());
+            } else {
+                var selectedId = [];
+                for (var j=0; j<selected.length; j++) {
+                    selectedId.push(parseInt(selected[j]));
+                }
+                callAjax('@{TeamRemoveUserFromTeamR}',
+                         JSON.stringify({
+                             teamRemoveUserFromTeamRequestUserIds: selectedId,
+                             teamRemoveUserFromTeamRequestTeamUuid: data[tmp].augmentedTeamDataEntityTeam.uuid
+                         }),
+                         function(userData) { // success
+                             console.log("Removed user: "+userData);
+                             // populate with users not in team
+                             populateSelectFrom(data,tmp);
+                             // populate with user in the team
+                             populateSelectTo(data,tmp);
+                             
+                             console.log("Yehaaw");
+                         },
+                         function(data) { // error
+                             alert(msgErrorTeamMemberRemovalError());
+                         });
+            }
+        });
+    
+
+    }
+};
+
+
+
+function doActualWorkWhenReady() {
+    // get all teams and populate table
+    
+    callAjax('@{TeamGetTeamsR}',
+             JSON.stringify({
+                 requestId: 1
+             }),
+             updateTable,
+             function (data) {
+                 alert(msgGetTeam());
+                 return;
+             }
+            );
+    // register a new project
+    
+    $("##{rawJS teamRegisterTeamButtonId}").click(function(event) {
+        event.preventDefault();
+        console.log("Register team");
+        var message = $("##{rawJS teamCreateEntryId}").val();
+        var desc = $("##{rawJS teamCreateEntryDescriptionId}").val();
+        // (Browsers that enforce the "required" attribute on the textarea won't see this alert)
+        if (!message) {
+            alert("#{rawJS $ renderMessage master [] MsgAlertFeedInProjectName}");
+            return;
+        }
+
+        // Make an AJAX request to the server to create a new team
+        // if it is successful, then update the table displaying projects
+        // otherwise, display an error message
+        
+        callAjax('@{TeamR}', // URL
+                 JSON.stringify({   // parameters
+                     teamAddTeamRequestName: message,
+                     teamAddTeamRequestDescription: desc
+                 }),
+                 function (data) { // success
+                     
+                     // Update the displayed table of projects by requesting all
+                     // projects and, if successful, replace the currently displayed
+                     // projects with the result of the query.
+                     // This is far simpler than locating where to insert the
+                     // new row and insert it.
+                     
+                     callAjax('@{TeamGetTeamsR}', // URL
+                              JSON.stringify({ // parameters
+                                  requestId: 1
+                              }),
+                              updateTable, // success
+                              function (data) { // error
+                                  // Could not obtain current list of projects
+                                  alert(msgErrorAddTeams());
+                                  console.log("Error creating comment: " + data);
+                              }
+                             );
+
+                     // clear the fields for new input
+                     
+                     $("##{rawJS teamCreateEntryId}").val("");
+                     $("##{rawJS teamCreateEntryDescriptionId}").val("");
+
+                 },
+                 function (data) { // error
+                     alert(msgErrorCreateTeam());
+                 }
+                );
+
+    });
+
+
+    // remove teams
+    //
+    // first, get all projects from the server
+    // second, check which of these has been marked for removal
+    // third, ask for confirmation
+    // fourth, if ok, then request removal of selected projects
+    // fifth remove them from the table
+    
+    var removeList = [];
+    var answer = false;
+    var uuidRemoveList = [];
+    
+
+    $("##{rawJS teamDeleteTeamButtonId}").click(function(event) {
+        removeList = [];
+        uuidRemoveList = [];
+        answer = false;
+        event.preventDefault();
+        // Make an AJAX request to the server to get all project names
+        callAjax('@{TeamGetTeamsR}', // URL
+                 JSON.stringify({ // parameters
+                     requestId: 1
+                 }),
+                 function (data) { // success
+                     var tableRef =  $("##{rawJS teamListId}").find('tbody');
+                     console.log(tableRef);
+                     console.log(data);
+                     for (var i = 0; i < data.length; i++) {
+                         name = data[i].augmentedTeamDataEntityTeam.name;
+                         label = '#js-2-team-radioButton-' + name;
+                         var isChecked = $(label).is(':checked');
+                         if (isChecked) {
+                             removeList.push(name);
+                             uuidRemoveList.push(data[i].augmentedTeamDataEntityTeam.uuid);
+                             console.log('Remove '+name);
+                         } else {
+                             console.log('Do not remove '+name);
+                         }
+                     }
+                     if (removeList.length === 0) {
+                         alert(msgCommonAlertNothingShouldBeRemoved());
+                         return;
+                     }
+                     var msg = '';
+                     for (var i = 0; i < removeList.length; i++) {
+                         msg = msg + removeList[i];
+                         if (i < removeList.length-1) {
+                             msg = msg + ", ";
+                         }
+                     }
+                     answer = confirm(msgConfirmRemoveTeam()+": "+msg);
+                     if (answer) {
+                         // Make an AJAX request to the server to get all project names
+                         callAjax('@{TeamRemoveTeamsR}', // URL
+                                  JSON.stringify({ // Parameters
+                                      teamRemoveTeamListRequestUuidList: uuidRemoveList
+                                  }),
+                                  function (data) { // success
+                                      console.log("Objects are now removed");
+                                      for (var i = 0; i < removeList.length; i++) {
+                                          var ref = "#js-1-"+uuidRemoveList[i];
+                                          $(ref).remove();
+                                      }
+                                  }, 
+                                  function (data) { // failure
+                                      alert(msgErrorRemoveTeams());
+                                      console.log("Error creating comment: " + data);
+                                  }
+                                 );
+                     }
+                 },
+                 function (data) { // error
+                     alert(msgErrorRemoveTeams);
+                     console.log("Error creating comment: " + data);
+                 }
+                );
+        
+    });
+    removeList = []; // empty the list
+
+}
+
+
+
+$(function() {
+    $("##{rawJS aDomId}").remove(); // remove message that JavaScript is turned off
+    callAjax('@{PreferencesGetPreferencesR}',
+             JSON.stringify({
+                 preferencesGetPreferencesRequestUserId: #{rawJS uidSqlKey}
+             }),
+             function(data) {
+                 languageCode = data[0].language;
+                 doActualWorkWhenReady();
+             },
+             function(data) {
+                 alert(msgErrorGetPreferences());
+                 doActualWorkWhenReady();
+             }
+            );
+
+    
+
+});
+

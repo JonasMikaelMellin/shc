@@ -1,0 +1,23 @@
+<div .masthead>
+    <div .container>
+        <div .row>
+            <h1 .header>
+                _{MsgHomeRTitle}
+            <h2>
+                _{MsgHomeRSubtitle}
+
+<div .container>
+    <!-- Starting
+        ================================================== -->
+    <div .bs-docs-section>
+        <div .row>
+            <div .col-lg-12>
+                <div .page-header>
+                    <h1 #start>_{MsgHomeRIntroductionSection}
+
+                    <p>
+                        _{MsgHomeRIntroductionSectionP1}
+                    <p>
+                        _{MsgHomeRIntroductionSectionP2}
+                        
+

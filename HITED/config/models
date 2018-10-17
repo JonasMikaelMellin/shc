@@ -1,0 +1,64 @@
+-- By default this file is used by `persistFileWith` in Model.hs (which is imported by Foundation.hs)
+-- Syntax for this file here: https://github.com/yesodweb/persistent/blob/master/docs/Persistent-entity-syntax.md
+
+Project json
+    name Text sqltype=varchar(255)
+    owner UserId sqltype=varchar(255) default=NULL
+    description Text sqltype=varchar(255) default=NULL
+    uuid Text sqltype=varchar(255)
+    UniqueProject name owner
+    UniqueProjectUUID uuid
+    deriving Typeable
+    deriving Show
+    deriving Eq
+
+ProjectTeamRelation json
+    projectId ProjectId
+    teamId TeamId
+    UniqueProjectTeamRelation projectId teamId
+    deriving Typeable
+    deriving Show
+    deriving Eq
+ 
+Team json
+    name Text sqltype=varchar(255)
+    owner UserId sqltype=varchar(255)
+    description Text sqltype=varchar(255) default=NULL
+    uuid Text sqltype=varchar(255)
+    UniqueTeamUUID uuid
+    UniqueTeam name owner
+    deriving Typeable
+    deriving Show
+    deriving Eq
+
+TeamMember json
+    userId UserId sqltype=varchar(255)
+    teamId TeamId sqltype=varchar(255)
+    UniqueTeamMember userId teamId
+    deriving Typeable
+    deriving Show
+    deriving Eq
+
+Preferences json 
+    userId UserId sqltype=varchar(255)
+    language Text sqltype=varchar(255)
+    UniqueUserId userId
+
+    
+User json
+    ident Text sqltype=varchar(255)
+    password Text Maybe sqltype=varchar(255) default=NULL
+    UniqueUser ident
+    deriving Typeable
+    deriving Show
+    deriving Eq
+Email
+    email Text sqltype=varchar(255)
+    userId UserId Maybe sqltype=varchar(255) default=NULL
+    verkey Text Maybe sqltype=varchar(255) default=NULL
+    UniqueEmail email
+Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived.
+    message Text sqltype=varchar(255)
+    userId UserId Maybe sqltype=varchar(255) default=NULL
+    deriving Eq
+    deriving Show

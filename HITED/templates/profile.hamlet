@@ -1,0 +1,36 @@
+<script src=@{StaticR js_getCookie_js}>
+<script src=@{StaticR js_callAjax_js}>
+<div .ui.container>
+
+    <h1 ##{profileRTitleId}>
+      _{MsgProfileRTitle}
+
+
+    <p>
+      _{MsgProfileIntroductionSectionParagraph}
+
+    <p>
+      _{MsgProfileIntroductionSectionParagraph2} <strong><span class="username">#{userIdent user}</span></strong>!
+    <h1>
+      _{MsgProfilePreferenceHeader}
+    <table>
+      <thead>
+        <td>
+          <strong>
+            _{MsgProfileSettingHeading}
+        <td>
+          <strong>
+            _{MsgProfileOptionHeading}
+      <tbody>
+        <td>
+          _{MsgProfileLanguageSetting}
+        <td>
+          <div .btn-group .dropright>
+            <button type="button" .btn .btn-secondary .dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <p ##{profileLanguageChoice}>XXX
+            <div .dropdown-menu>
+              <a .dropdown-item href="#english" id="js-english">
+                _{MsgEnglishLanguageOption}
+              <a .dropdown-item href="#swedish" id="js-swedish">
+                _{MsgSwedishLanguageOption}
+

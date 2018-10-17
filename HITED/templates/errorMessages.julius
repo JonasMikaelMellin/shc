@@ -1,0 +1,419 @@
+var languageCode = "sv";
+var languageCodeSet = false;
+
+
+function msgConfirmRemoveTeam() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgConfirmRemoveTeam}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgConfirmRemoveTeam}";
+    }
+}
+
+
+
+function msgErrorCreateTeam() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorCreateTeam}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorCreateTeam}";
+    }
+}
+
+function msgErrorGetTeam() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorGetTeam}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorGetTeam}";
+    }
+}
+
+function msgErrorRemoveTeams() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorRemoveTeams}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorRemoveTeams}";
+    }
+}
+
+function msgErrorGetUser() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorGetUser}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorGetUser}";
+    }
+}
+
+function msgErrorGetNotInTeamUsers() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorGetNotInTeamUsers}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorGetNotInTeamUsers}";
+    }
+}
+
+function msgErrorGetInTeamUsers() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorGetInTeamUsers}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorGetInTeamUsers}";
+    }
+}
+
+function msgErrorTeamMemberAdditionNotSelected() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorTeamMemberAdditionNotSelected}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorTeamMemberAdditionNotSelected}";
+    }
+}
+
+function msgErrorTeamMemberAdditionError() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorTeamMemberAdditionError}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorTeamMemberAdditionError}";
+    }
+}
+
+function msgErrorTeamMemberRemovalNotSelected() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorTeamMemberRemovalNotSelected}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorTeamMemberRemovalNotSelected}";
+    }
+}
+
+function msgErrorTeamMemberRemovalError() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorTeamMemberRemovalError}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorTeamMemberRemovalError}";
+    }
+}
+
+
+function msgErrorGetPreferences() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorGetPreferences}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorGetPreferences}";
+    }
+}
+
+function msgCommonActionMarkButton() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgCommonActionMarkButton}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgCommonActionMarkButton}";
+    }
+}
+
+function msgCommonActionEditButton() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgCommonActionEditButton}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgCommonActionEditButton}";
+    }
+}
+
+function msgCommonActionCloseButton() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgCommonActionCloseButton}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgCommonActionCloseButton}";
+    }
+}
+
+function msgCommonActionSaveButton() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgCommonActionSaveButton}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgCommonActionSaveButton}";
+    }
+}
+
+function msgCommonAlertNothingShouldBeRemoved() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgCommonAlertNothingShouldBeRemoved}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgCommonAlertNothingShouldBeRemoved}";
+    }
+}
+
+function msgErrorGetPreferences() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorGetPreferences}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorGetPreferences}";
+    }
+}
+
+function msgErrorGetAssociatedTeams() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorGetAssociatedTeams}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorGetAssociatedTeams}";
+    }
+}
+
+
+function msgProfileErrorChangeLanguageChoice() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProfileErrorChangeLanguageChoice}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProfileErrorChangeLanguageChoice}";
+    }
+}
+
+function msgProfileChangeLanguageSuccess() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProfileChangeLanguageSuccess}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProfileChangeLanguageSuccess}";
+    }
+}
+
+function msgProfileErrorChangeLanguageSetting() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProfileErrorChangeLanguageSetting}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProfileErrorChangeLanguageSetting}";
+    }
+}
+
+function msgProjectModalEditTitle() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProjectModalEditTitle}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProjectModalEditTitle}";
+    }
+}
+
+function msgProjectModalEditNamePlaceholder() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProjectModalEditNamePlaceholder}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProjectModalEditNamePlaceholder}";
+    }
+}
+
+function msgProjectModalEditDescriptionPlaceholder() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProjectModalEditDescriptionPlaceholder}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProjectModalEditDescriptionPlaceholder}";
+    }
+}
+
+function msgProjectModalEditSelect() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProjectModalEditSelect}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProjectModalEditSelect}";
+    }
+}
+
+function msgProjectModalEditSelectFrom() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProjectModalEditSelectFrom}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProjectModalEditSelectFrom}";
+    }
+}
+
+function msgProjectName() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProjectName}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProjectName}";
+    }
+}
+
+function msgProjectDescription() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProjectDescription}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProjectDescription}";
+    }
+}
+
+function msgProjectTeam() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProjectTeam}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProjectTeam}";
+    }
+}
+
+function msgProjectModelEditSelect() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgProjectModalEditSelect}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgProjectModalEditSelect}";
+    }
+}
+
+function msgErrorProjectGetProjects() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorProjectGetProjects}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorProjectGetProjects}";
+    }
+}
+
+function msgErrorProjectGetProjectsInWhichUserOnlyParticipates() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorProjectGetProjectsInWhichUserOnlyParticipates}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorProjectGetProjectsInWhichUserOnlyParticipates}";
+    }
+}
+
+function msgErrorRemoveProjects() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorRemoveProjects}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorRemoveProjects}";
+    }
+}
+
+function msgErrorProjectUpdateProject() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorProjectUpdateProject}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorProjectUpdateProject}";
+    }
+}
+
+
+function msgErrorProjectAssociatedTeamAdditionNotSelected() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorProjectAssociatedTeamAdditionNotSelected}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorProjectAssociatedTeamAdditionNotSelected}";
+    }
+}
+
+function msgErrorProjectAssociatedTeamAdditionError() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorProjectAssociatedTeamAdditionError}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorProjectAssociatedTeamAdditionError}";
+    }
+}
+
+function msgErrorProjectAssociatedTeamRemovalNotSelected() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorProjectAssociatedTeamRemovalNotSelected}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorProjectAssociatedTeamRemovalNotSelected}";
+    }
+}
+
+function msgErrorProjectAssociatedTeamRemovalError() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorProjectAssociatedTeamRemovalError}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorProjectAssociatedTeamRemovalError}";
+    }
+}
+
+function msgErrorProjectGetNotInProjectTeams() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorProjectGetNotInProjectTeams}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorProjectGetNotInProjectTeams}";
+    }
+}
+
+
+function msgErrorProjectGetInProjectTeams() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorProjectGetInProjectTeams}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorProjectGetInProjectTeams}";
+    }
+}
+
+
+function msgTeamModalEditTitle() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgTeamModalEditTitle}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgTeamModalEditTitle}";
+    }
+}
+
+function msgTeamModalEditTeamNamePlaceholder() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgTeamModalEditTeamNamePlaceholder}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgTeamModalEditTeamNamePlaceholder}";
+    }
+}
+
+function msgTeamModalEditTeamDescriptionPlaceholder() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgTeamModalEditTeamDescriptionPlaceholder}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgTeamModalEditTeamDescriptionPlaceholder}";
+    }
+}
+
+function msgTeamModalEditTeamSelect() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgTeamModalEditTeamSelect}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgTeamModalEditTeamSelect}";
+    }
+}
+
+function msgTeamModalEditTeamSelectFrom() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgTeamModalEditTeamSelectFrom}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgTeamModalEditTeamSelectFrom}";
+    }
+}
+
+function msgTeamName() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgTeamName}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgTeamName}";
+    }
+}
+
+function msgTeamOwner() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgTeamOwner}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgTeamOwner}";
+    }
+}
+
+
+function msgTeamDescription() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgTeamDescription}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgTeamDescription}";
+    }
+}
+
+function msgTeamMember() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgTeamMember}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgTeamMember}";
+    }
+}
+
+function msgErrorTeamUpdateTeam() {
+    if (languageCode === "sv") {
+        return "#{rawJS $ renderMessage master ["sv"] MsgErrorTeamUpdateTeam}";
+    } else {
+        return "#{rawJS $ renderMessage master ["en"] MsgErrorTeamUpdateTeam}";
+    }
+}

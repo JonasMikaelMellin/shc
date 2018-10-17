@@ -1,0 +1,66 @@
+<script src=@{StaticR js_getCookie_js}>
+<script src=@{StaticR js_callAjax_js}>
+<div .jumbotron>
+  <div .container>
+      <div .row>
+          <h1 .display-4>_{MsgTeamRTitle}
+<div .container>
+    <div .bs-docs-section>
+        <div .row>
+            <div .col-xl-3>
+                <div .page-header>
+                    <div .max-height>
+                        <table .table   ##{teamListId} style="height=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <colgroup span="1" style="width=100px;">
+                            <thead>
+                                <tr>
+                                    <th>_{MsgTeamName}
+                                    <th>_{MsgTeamOwner}
+                                    <th>_{MsgTeamDescription}
+                                    <th>_{MsgTeamMember}
+                                    <th>_{MsgCommonActionMarkState}
+                                    <th>_{MsgCommonActionEdit}
+                            <tbody>
+                                $forall team <- allTeams
+                                    <tr ##{"js-1-" ++ (teamUuid $ entityVal $ team)}>
+                                        <td>#{teamName $ entityVal $  team}
+                                        <td>
+                                        <td>#{teamDescription $ entityVal $ team}
+                                        <td>
+                                            <form .form-horizontal  ##{"js-2-" ++ (teamName $ entityVal $  team)}>
+                                                <div .field .btn-group-toggle data-toggle="buttons">
+                                                    <label .btn .btn-secondary active>
+                                                        <input  ##{"js-2-team-radioButton-" ++ (teamName $ entityVal $  team)} type="checkbox" autocomplete="off">_{MsgCommonActionMarkButton}
+                                        <td>
+                                            <form .form-horizontal type="button" ##{"js-2-team-editButton-" ++ (teamName $ entityVal $  team) }  data-toggle="modal" data-target="#myModal">_{MsgCommonActionEditButton}
+         <div .row>
+             <div .col-xl-6>
+                <div .bs-callout bs-callout-info well>
+                    <form  ##{teamFormId}>
+                        <div .form-row>
+                            <div .form-group col-md-3>
+                                <label for="##{teamCreateEntryId}">_{MsgTeamName}:
+                                <input .form-control ##{teamCreateEntryId} placeholder="Mata in projektnamn h&auml;r" required maxlength="255">
+                            <div .form-group col-md-3>
+                                <label for="##{teamCreateEntryDescriptionId}">_{MsgProjectDescription}:
+                                <textarea .form-control ##{teamCreateEntryDescriptionId} rows="3">
+                        <div .form-row cold-md-6>
+                            <button ##{teamRegisterTeamButtonId} .btn.btn-primary type="submit">
+                               _{MsgActionRegisterTeamButton}
+                            <button ##{teamDeleteTeamButtonId} .btn .btn-primary type="submit">
+                               _{MsgActionRemoveTeamButton}
+                        
+        <div .row ##{aDomId}>
+            <div .col-xl-12>
+                <div .bs-callout bs-callout-info well>
+                    <li .list-group-item >
+                        _{MsgCommonTextJavascriptDisabled}
+        <div .row >
+            <div .col-sm-12  ##{teamModalAddPointId}>
+
+
