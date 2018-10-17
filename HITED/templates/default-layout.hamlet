@@ -48,3 +48,9 @@ $else
     <div .container>
         <p .text-muted>
             #{appCopyright $ appSettings master}
+        <p>
+            Finansiärer: &nbsp; &nbsp;
+            <img src="http://www.his.se/Static/Images/HIS_SE_LOGO_WEB-SV.png" height="137" width="137">
+            &nbsp;
+            &nbsp;
+            <img src="https://tillvaxtverket.se/images/18.661748141551692c5bea8fbc/1468404368868/EUlogo_c_RGB.jpg" height="137" width="137">
