@@ -20,6 +20,7 @@ import Control.Monad.Logger (LogSource)
 import Yesod.Auth.Dummy
 
 import Yesod.Auth.OpenId    (authOpenId, IdentifierType (Claimed))
+import Yesod.Auth.GoogleEmail2 (authGoogleEmail)
 import Yesod.Default.Util   (addStaticContentExternal)
 import Yesod.Core.Types     (Logger)
 import qualified Yesod.Core.Unsafe as Unsafe
@@ -324,7 +325,7 @@ instance YesodAuth App where
 
     -- You can add other plugins like Google Email, email or OAuth here
     authPlugins :: App -> [AuthPlugin App]
-    authPlugins app = [authOpenId Claimed []] ++ extraAuthPlugins
+    authPlugins app = [authGoogleEmail (appGoogleClientId $ appSettings app) (appGoogleSecret $ appSettings app) ] ++ extraAuthPlugins
         -- Enable authDummy login if enabled.
         where extraAuthPlugins = [authDummy | appAuthDummyLogin $ appSettings app]
 
