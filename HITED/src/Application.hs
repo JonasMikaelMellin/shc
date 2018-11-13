@@ -52,9 +52,11 @@ import qualified Data.Tree.RBTree as RBT
 import Handler.Common
 import Handler.Home
 import Handler.Comment
+import Handler.PrivacyPolicy
 import Handler.Profile 
 import Handler.Project
 import Handler.Team
+import Handler.TermsOfService
 import Handler.User
 import Handler.Preferences
 import qualified Data.UUID.V4 as DUV4

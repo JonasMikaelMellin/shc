@@ -35,6 +35,10 @@ PREFERENCES: PREFERENCES
 
 ErrorGetPreferences: It was not possible to retrieve the preferences data. The most likely cause is that there is a problem with the server. 
 
+PRIVACYPOLICY: PRIVACYPOLICY
+
+PrivacyPolicyRTitle: Privacy Policy
+
 PROFILE: PROFILE
 
 ProfileRTitle: Access granted.
@@ -130,6 +134,10 @@ TeamName: Team name
 TeamOwner: Team owner
 TeamDescription: Team description
 TeamMember: Team member
+
+TERMSOFSERVICE: TERMSOFSERVICE
+
+TermsOfServiceRTitle: Terms of service
 
 USER: USER
 

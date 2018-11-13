@@ -40,6 +40,9 @@ PREFERENCES: PREFERENCES
 
 ErrorGetPreferences: Det gick inte att få tag i preferensdata. Förmodligen är det något problem med serven.
 
+PRIVACYPOLICY: PRIVACYPOLICY
+
+PrivacyPolicyRTitle: Integritetspolicy
 
 PROFILE: PROFILE
 
@@ -138,6 +141,10 @@ TeamName: Teamnamn
 TeamOwner: Teamägare
 TeamDescription: Teambeskrivning
 TeamMember: Teammedlem
+
+TERMSOFSERVICE: TERMSOFSERVICE
+
+TermsOfServiceRTitle: Terms of Service
 
 USER: USER
 
