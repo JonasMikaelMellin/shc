@@ -1,0 +1,23 @@
+<div .jumbotron>
+    <div .container>
+        <div .row>
+            <h1 .display-4>
+                _{MsgTermsOfServiceRTitle}
+
+<div .container>
+    <!-- Starting
+        ================================================== -->
+    <div .bs-docs-section>
+        <div .row>
+            <div .col-lg-12>
+                <div .page-header>
+
+                     <p>Effective date: November 08, 2018
+
+
+                     <p>University of Skövde ("us", "we", or "our") operates the https://shc.ihl.his.se website (the "Service").
+
+                     <p>This page informs you of our terms of service
+                     
+                     <p>This is an entirely experimental service that can change in the future. 
+
