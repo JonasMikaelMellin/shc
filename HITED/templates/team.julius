@@ -100,9 +100,10 @@ function modalEditTeam(idIndex,header) {
 function populateSelectTo(data,rowIndex) {
     $('#selectTo-'+rowIndex).empty();
 
+    console.log(data);
     callAjax('@{UserGetInTeamUsersR}',
              JSON.stringify({
-                 getInTeamUsersRequestTeamName: data[rowIndex].name,
+                 getInTeamUsersRequestTeamName: data[rowIndex].augmentedTeamDataEntityTeam.name,
                  getInTeamUsersRequestRowId: rowIndex
                      }),
              function(resultData) { // success
@@ -124,7 +125,7 @@ function populateSelectFrom(data,rowIndex) {
     console.log(rowIndex);
     callAjax('@{UserGetNotInTeamUsersR}',
              JSON.stringify({
-                 getNotInTeamUsersRequestTeamName: data[rowIndex].name,
+                 getNotInTeamUsersRequestTeamName: data[rowIndex].augmentedTeamDataEntityTeam.name,
                  getNotInTeamUsersRequestRowId: rowIndex
              }),
              function(resultData) { // success

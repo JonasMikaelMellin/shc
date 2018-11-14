@@ -170,7 +170,7 @@ postTeamR = do
 postTeamGetTeamsR :: Handler Value     
 postTeamGetTeamsR = do     
   _ <- (requireJsonBody :: Handler HITEDModule.Utilities.NullRequest)
-  (uid,_) <- requireAuthPair
+  (uid,_) <- requireAuthPair 
   allTeams <-   getAllTeamsForUser uid
   allTeamsInWhichUserOnlyParticipates <- getAllProjectsInWhichUserOnlyParticipates uid
   -- define the local function transform that construct AugmentedProjectData based on

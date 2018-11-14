@@ -36,7 +36,7 @@ data GetUserDataResponse = GetUserDataResponse {
 
 instance FromJSON GetUserDataResponse
 
-instance ToJSON GetUserDataResponse
+instance ToJSON GetUserDataResponse 
 
 data GetNotInTeamUsersRequest = GetNotInTeamUsersRequest {
   getNotInTeamUsersRequestTeamName :: Text
@@ -45,7 +45,7 @@ data GetNotInTeamUsersRequest = GetNotInTeamUsersRequest {
 
 instance FromJSON GetNotInTeamUsersRequest
 
-instance ToJSON GetNotInTeamUsersRequest
+instance ToJSON GetNotInTeamUsersRequest 
 
 data GetNotInTeamUsersResponse = GetNotInTeamUsersResponse {
   getNotInTeamUsersResponseUserData :: [Entity User]
@@ -135,6 +135,7 @@ postUserGetNotInTeamUsersR :: Handler Value
 postUserGetNotInTeamUsersR = do
   (uid,_) <- requireAuthPair
   getNotInTeamUsersRequest <- (requireJsonBody :: Handler GetNotInTeamUsersRequest)
+  $(logDebug) $ Data.Text.pack $ show getNotInTeamUsersRequest
   userData <-  getNotInTeamUsers (getNotInTeamUsersRequestTeamName getNotInTeamUsersRequest) uid
   let result = GetNotInTeamUsersResponse {
         getNotInTeamUsersResponseUserData = userData,
