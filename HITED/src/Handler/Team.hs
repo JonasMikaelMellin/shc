@@ -34,7 +34,7 @@ import Database.Persist.Sql (sqlQQ,executeQQ,fromSqlKey,rawSql)
 import HITEDModule.Utilities (NullRequest,hitedSetLanguage,getUUIDV4AsText)
 import System.IO.Unsafe (unsafePerformIO) 
 
-data AugmentedTeamData = AugmentedTeamData {
+data AugmentedTeamData = AugmentedTeamData { 
   augmentedTeamDataEntityTeam :: Entity Team
   , augmentedTeamDataIsOwner :: Bool
   } deriving (Generic)
@@ -281,7 +281,19 @@ postTeamUpdateTeamR = do
   _ <- updateTeam teamUuid teamName teamDescription
   (uid,_) <- requireAuthPair
   allTeams <-   getAllTeamsForUser uid
-  returnJson allTeams
+  allTeamsInWhichUserOnlyParticipates <- getAllProjectsInWhichUserOnlyParticipates uid
+  -- define the local function transform that construct AugmentedProjectData based on
+  -- the Entity Project and sets the augmentedProjectDataIsOwner flag to True if
+  -- the owner is the same as the user  
+  let transform = \et -> AugmentedTeamData {
+        augmentedTeamDataEntityTeam = et
+        , augmentedTeamDataIsOwner = case et of
+            Entity _ teamRecord -> uid == (teamOwner teamRecord)
+        }
+  -- apply transform to the merge of both results
+  let result = fmap transform (allTeams ++ allTeamsInWhichUserOnlyParticipates)
+
+  returnJson result
   
   
 -- Support functions in project page 

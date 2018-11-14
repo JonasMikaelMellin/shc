@@ -143,7 +143,8 @@ function populateSelectFrom(data,rowIndex) {
 }
 
 function updateTable(data) {
-    console.log("Success: "+data);
+    console.log("Success:");
+    console.log(data);
     $("##{rawJS teamListId} > tbody").html("");
     var ownerCell = [];
     var teamMemberCell = [];
