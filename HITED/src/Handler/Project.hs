@@ -282,7 +282,18 @@ postProjectUpdateProjectR = do
   _ <- updateProject projectUuid projectName projectDescription
   (uid,_) <- requireAuthPair
   allProjects <- getAllProjectsForUser uid
-  returnJson allProjects
+  allProjectInWhichUserOnlyParticipates <- getAllProjectsInWhichUserOnlyParticipates uid
+  -- define the local function transform that construct AugmentedProjectData based on
+  -- the Entity Project and sets the augmentedProjectDataIsOwner flag to True if
+  -- the owner is the same as the user  
+  let transform = \ep -> AugmentedProjectData {
+        augmentedProjectDataEntityProject = ep
+        , augmentedProjectDataIsOwner = case ep of
+            Entity _ projectRecord -> uid == (projectOwner projectRecord)
+        }
+  -- apply transform to the merge of both results
+  let result = fmap transform (allProjects ++ allProjectInWhichUserOnlyParticipates)
+  returnJson result
 
 
 postProjectGetNotInProjectTeamsR :: Handler Value

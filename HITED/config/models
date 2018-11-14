@@ -57,6 +57,12 @@ Email
     userId UserId Maybe sqltype=varchar(255) default=NULL
     verkey Text Maybe sqltype=varchar(255) default=NULL
     UniqueEmail email
+UserAdminState json
+    userId UserId sqltype=varchar(255)
+    approved Bool default=FALSE
+    locked Bool default=FALSE
+    admin Bool default=FALSE
+    
 Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived.
     message Text sqltype=varchar(255)
     userId UserId Maybe sqltype=varchar(255) default=NULL

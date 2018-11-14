@@ -2,8 +2,9 @@ COMMON: COMMON
 
 NBHome: Home
 NBProfile: Profile
-NBProjectList: Project list
-NBTeamManagement: Team management
+NBProjectList: Projects
+NBTeamManagement: Teams
+NBAdmin: Admin
 NBLogin: Login
 NBLogout: Logout
 

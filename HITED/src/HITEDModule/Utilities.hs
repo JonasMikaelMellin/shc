@@ -66,3 +66,4 @@ hitedSetLanguage = do
         Nothing -> Preferences uid "sv"
   setLanguage $ preferencesLanguage $ languagePreferences
   return ()
+

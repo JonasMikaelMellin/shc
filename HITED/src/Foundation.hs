@@ -11,7 +11,7 @@
 module Foundation where
 
 import Import.NoFoundation
-import Database.Persist.Sql (ConnectionPool, runSqlPool)
+import Database.Persist.Sql (ConnectionPool, runSqlPool, rawSql)
 import Text.Hamlet          (hamletFile)
 import Text.Jasmine         (minifym)
 import Control.Monad.Logger (LogSource)
@@ -140,6 +140,11 @@ instance Yesod App where
                     , menuItemRoute = TeamR
                     , menuItemAccessCallback = isJust muser
                     }
+                -- , NavbarRight $ MenuItem
+                --   { menuItemLabel = (renderMessage master [] MsgNBAdmin)
+                --   , menuItemRoute = AdminR
+                --   , menuItemAccessCallBack = isAdminAuthenticated
+                --   }
                 , NavbarRight $ MenuItem 
                     { menuItemLabel = (renderMessage master [] MsgNBLogin)
                     , menuItemRoute = AuthR LoginR
@@ -151,7 +156,7 @@ instance Yesod App where
                     , menuItemAccessCallback = isJust muser
                     }
                 ]
-
+ 
         let navbarLeftMenuItems = [x | NavbarLeft x <- menuItems]
         let navbarRightMenuItems = [x | NavbarRight x <- menuItems]
 
@@ -338,6 +343,31 @@ isAuthenticated = do
     return $ case muid of
         Nothing -> Unauthorized "You must login to access this page"
         Just _ -> Authorized
+
+
+-- | Query user admin status
+checkIfAdminQuery :: UserId -> Handler [Entity UserAdminState]
+checkIfAdminQuery uid = do
+  runDB $ rawSql q [toPersistValue uid] where
+    q="SELECT ?? FROM user_admin_state WHERE user_id = (SELECT id FROM user WHERE user_ident = ?)";
+
+-- | Access function to determine if a user is an administrator
+
+checkIfAdminCondition :: UserId -> Handler Bool
+checkIfAdminCondition uid = do
+  result <- checkIfAdminQuery uid
+  case result of
+    [(Entity _ userAdminState)] -> return $ userAdminStateAdmin userAdminState
+    _ -> return False
+
+  
+-- | Access function to determine if the currently logged user is an administrator
+isAdminAuthenticated :: Handler Bool
+isAdminAuthenticated = do
+  muid <- maybeAuthId
+  case muid of
+    Nothing -> return False
+    Just uid -> checkIfAdminCondition uid
 
 instance YesodAuthPersist App
 
