@@ -24,9 +24,9 @@ reload-templates: true
 # mutable-static: false
 # skip-combining: false
 # auth-dummy-login : false
-auth-google-client-id : "_env:YESOD_GOOGLE_CLIENT_ID:'fakeId'"
-auth-google-secret : "_env:YESOD_GOOGLE_SECRET:'fakeSecret'"
-app-admin-list : "_env:YESOD_APP_ADMIN_LIST:[]"
+auth-google-client-id : "_env:HITED_GOOGLE_CLIENT_ID:'fakeId'"
+auth-google-secret : "_env:HITEDD_GOOGLE_SECRET:'fakeSecret'"
+app-admin-list : "_env:HITED_APP_ADMIN_LIST:[]"
 
 # NB: If you need a numeric value (e.g. 123) to parse as a String, wrap it in single quotes (e.g. "_env:YESOD_PGPASS:'123'")
 # See https://github.com/yesodweb/yesod/wiki/Configuration#parsing-numeric-values-as-strings
