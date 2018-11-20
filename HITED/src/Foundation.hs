@@ -30,6 +30,7 @@ import Data.Text (Text)
 import Data.Tree.RBTree (RBTree)
 import qualified Data.UUID as DU
 import qualified Data.UUID.V4 as DUV4
+import qualified Data.Typeable as Type
 
 -- | The foundation datatype for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -349,16 +350,26 @@ isAuthenticated = do
 checkIfAdminQuery :: UserId -> Handler [Entity UserAdminState]
 checkIfAdminQuery uid = do
   runDB $ rawSql q [toPersistValue uid] where
-    q="SELECT ?? FROM user_admin_state WHERE user_id = (SELECT id FROM user WHERE user_ident = ?)";
+    q="SELECT ?? FROM user_admin_state WHERE user_id = (SELECT id FROM user WHERE ident = ?)";
 
 -- | Access function to determine if a user is an administrator
 
 checkIfAdminCondition :: UserId -> Handler Bool
 checkIfAdminCondition uid = do
   result <- checkIfAdminQuery uid
+
   case result of
     [(Entity _ userAdminState)] -> return $ userAdminStateAdmin userAdminState
-    _ -> return False
+    _ -> do
+      (_,entityUser) <- requireAuthPair
+      let identity = userIdent entityUser
+      master <- getYesod
+      let maal = appAdminList $ appSettings master
+      case maal of
+        Just aal -> return $ elem identity aal
+        Nothing -> return False
+
+
 
   
 -- | Access function to determine if the currently logged user is an administrator
@@ -369,6 +380,17 @@ isAdminAuthenticated = do
     Nothing -> return False
     Just uid -> checkIfAdminCondition uid
 
+showAdministratorStatusText :: Handler Text
+showAdministratorStatusText = do
+  master <- getYesod
+  isAdmin <- isAdminAuthenticated 
+  let result = if (isAdmin)
+        then
+        renderMessage master [] MsgProfileAdministratorMessage
+        else
+        renderMessage master [] MsgProfileNotAdministratorMessage
+  return result
+  
 instance YesodAuthPersist App
 
 -- This instance is required to use forms. You can modify renderMessage to

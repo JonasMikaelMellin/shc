@@ -53,6 +53,9 @@ ProfileErrorChangeLanguageChoice: Incorrect language choice.
 ProfileErrorChangeLanguageSetting: It was not possible to change the language.
 ProfileChangeLanguageSuccess: Language choice is set.
 
+ProfileAdministratorMessage: You have administrator rights
+ProfileNotAdministratorMessage: You do not have administrator rights
+ProfileAdministratorLabel: Administrative rights:
 
 PROJECT: PROJECT
 

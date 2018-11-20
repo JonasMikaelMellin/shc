@@ -13,6 +13,9 @@
       _{MsgProfileIntroductionSectionParagraph2} <strong><span class="username">#{userIdent user}</span></strong>!
     <h1>
       _{MsgProfilePreferenceHeader}
+    <p><strong>_{MsgProfileAdministratorLabel}:</strong> #{profileAdministrativeRights}
+
+    
     <table>
       <thead>
         <td>

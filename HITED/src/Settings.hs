@@ -70,6 +70,8 @@ data AppSettings = AppSettings
     -- ^ Google Client Id
     , appGoogleSecret           :: Text
     -- ^ Google Secret
+    , appAdminList              :: Maybe [Text]
+    -- ^ Admin list
     }
 
 instance FromJSON AppSettings where
@@ -101,6 +103,7 @@ instance FromJSON AppSettings where
         appVersion                <- o .:? "version"
         appGoogleClientId         <- o .: "auth-google-client-id"
         appGoogleSecret           <- o .: "auth-google-secret"
+        appAdminList              <- o .:? "app-admin-list"
 
         -- This code enables MySQL's strict mode, without which MySQL will truncate data.
         -- See https://github.com/yesodweb/persistent/wiki/Database-Configuration#strict-mode for details

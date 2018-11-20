@@ -51,7 +51,8 @@ getProfileR = do
     _ <- case allPreferences of 
            [Entity _ preference] -> setLanguage $ preferencesLanguage preference
            _ -> setLanguage "sv"  
-    master <- getYesod 
+    master <- getYesod
+    profileAdministrativeRights <- showAdministratorStatusText
     defaultLayout $ do 
         setTitle . toHtml $ userIdent user <> "'s User page"
         $(widgetFile "errorMessages")

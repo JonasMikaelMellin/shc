@@ -58,6 +58,10 @@ ProfileErrorChangeLanguageChoice: Ej korrekt språkval.
 ProfileErrorChangeLanguageSetting: Kunde inte sätta språkvalet.
 ProfileChangeLanguageSuccess: Språkval satt.
 
+ProfileAdministratorMessage: Du har administratörsrättigheter
+ProfileNotAdministratorMessage: Du har inte administratörsrättigheter
+ProfileAdministratorLabel: Administrativa rättigheter:
+
 PROJECT: PROJECT
 
 ActionRegisterProjectButton: Registrera projekt
