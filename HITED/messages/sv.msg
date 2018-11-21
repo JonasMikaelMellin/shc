@@ -25,9 +25,15 @@ EnglishLanguageOption: Engelska
 SwedishLanguageOption: Svenska
 
 
+ADMIN: ADMIN
+AdminRTitle: Adminstration
+AdminUserName: Användarnamn
+AdminApproved: Bekräftad
+AdminLocked: Låst
+AdminAdmin: Administratör
 
-
-
+EDITOR: EDITOR
+EditorRTitle: Editor
 
 HOME: HOME
 

@@ -23,6 +23,17 @@ CommonTextJavascriptDisabled: JavaScript is disabled, please turn it on to enabl
 EnglishLanguageOption: English
 SwedishLanguageOption: Swedish
 
+ADMIN: ADMIN
+AdminRTitle: Administration
+AdminUserName: User name
+AdminApproved: Approved
+AdminLocked: Locked
+AdminAdmin: Administrator
+
+EDITOR: EDITOR
+EditorRTitle: Editor
+
+
 
 HOME: HOME
 
