@@ -7,7 +7,7 @@ NBTeamManagement: Team
 NBAdmin: Admin
 NBLogin: Logga in
 NBLogout: Logga ut
-
+NBEditor: Editor
 
 
 CommonActionMarkState: Markerad?
@@ -27,6 +27,8 @@ SwedishLanguageOption: Svenska
 
 
 
+EDITOR: EDITOR
+EditorRTitle: Editor
 
 
 HOME: HOME

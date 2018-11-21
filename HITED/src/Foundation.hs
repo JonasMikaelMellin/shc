@@ -140,6 +140,11 @@ instance Yesod App where
                     , menuItemRoute = TeamR
                     , menuItemAccessCallback = isJust muser
                     }
+                , NavbarLeft $ MenuItem
+                    { menuItemLabel = (renderMessage master [] MsgNBEditor)
+                    , menuItemRoute = EditorR
+                    , menuItemAccessCallback = isJust muser
+                    }
                 -- , NavbarRight $ MenuItem
                 --   { menuItemLabel = (renderMessage master [] MsgNBAdmin)
                 --   , menuItemRoute = AdminR
@@ -196,6 +201,8 @@ instance Yesod App where
 
     -- the profile route requires that the user is authenticated, so we
     -- delegate to that function
+    isAuthorized EditorR _ = isAuthenticated
+    
     isAuthorized PreferencesGetPreferencesR _ = isAuthenticated 
     isAuthorized ProfileR _ = isAuthenticated
     isAuthorized ProfileChangeLanguageR _ = isAuthenticated
@@ -277,16 +284,19 @@ instance YesodBreadcrumbs App where
         -> Handler (Text, Maybe (Route App))
     breadcrumb HomeR = do
       t <- getBreadcumbTextFromAppMessage MsgNBHome
-      return (t, Nothing)  
+      return (t, Nothing)
+    breadcrumb EditorR = do
+      t <- getBreadcumbTextFromAppMessage MsgNBEditor
+      return (t, Just HomeR)
     breadcrumb (AuthR _) = do
       t <- getBreadcumbTextFromAppMessage MsgNBLogin
       return (t, Just HomeR)
     breadcrumb ProfileR = do
       t <- getBreadcumbTextFromAppMessage MsgNBProfile
       return (t, Just HomeR)
-    breadcrumb ProjectListR = do
-      t <- getBreadcumbTextFromAppMessage MsgNBProjectList
-      return (t, Just HomeR)
+    breadcrumb ProjectListR = do            
+      t <- getBreadcumbTextFromAppMessage MsgNBProjectList 
+      return (t, Just HomeR) 
     breadcrumb TeamR = do
       t <- getBreadcumbTextFromAppMessage MsgNBTeamManagement
       return (t, Just HomeR)

@@ -17,6 +17,8 @@
 
 -- /admin AdminR GET POST
 
+/editor EditorR GET
+
 /profile ProfileR GET
 /profileChangeLanguage ProfileChangeLanguageR POST
 

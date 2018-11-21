@@ -70,6 +70,14 @@ data AppSettings = AppSettings
     -- ^ Google Client Id
     , appGoogleSecret           :: Text
     -- ^ Google Secret
+    , appEditorTabHeight        :: Int
+    -- ^ Height of tab bar
+    , appEditorNavigationHeight :: Int
+    -- ^ Height of navigation bar
+    , appEditorPaletteHeight    :: Int
+    -- ^ Height of palette
+    , appEditorModelHeight      :: Int
+    -- ^ Height of modelling area
     }
 
 instance FromJSON AppSettings where
@@ -101,6 +109,10 @@ instance FromJSON AppSettings where
         appVersion                <- o .:? "version"
         appGoogleClientId         <- o .: "auth-google-client-id"
         appGoogleSecret           <- o .: "auth-google-secret"
+        appEditorTabHeight        <- o .: "editorTabHeight" 
+        appEditorNavigationHeight <- o .: "editorNavigationHeight"
+        appEditorPaletteHeight    <- o .: "editorPaletteHeight"
+        appEditorModelHeight      <- o .: "editorModelHeight"
 
         -- This code enables MySQL's strict mode, without which MySQL will truncate data.
         -- See https://github.com/yesodweb/persistent/wiki/Database-Configuration#strict-mode for details

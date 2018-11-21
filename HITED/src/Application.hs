@@ -59,6 +59,7 @@ import Handler.Team
 import Handler.TermsOfService
 import Handler.User
 import Handler.Preferences
+import Handler.Editor
 import qualified Data.UUID.V4 as DUV4
 
 -- This line actually creates our YesodDispatch instance. It is the second half

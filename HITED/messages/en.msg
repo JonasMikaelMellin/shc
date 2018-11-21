@@ -7,6 +7,7 @@ NBTeamManagement: Teams
 NBAdmin: Admin
 NBLogin: Login
 NBLogout: Logout
+NBEditor: Editor
 
 
 CommonActionMarkState: Marked?
@@ -22,6 +23,11 @@ CommonTextJavascriptDisabled: JavaScript is disabled, please turn it on to enabl
 
 EnglishLanguageOption: English
 SwedishLanguageOption: Swedish
+
+
+EDITOR: EDITOR
+EditorRTitle: Editor
+
 
 
 HOME: HOME

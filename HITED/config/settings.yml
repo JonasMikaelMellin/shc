@@ -43,3 +43,7 @@ copyright: Copyright Jonas Mellin 2018
 #analytics: UA-YOURCODE
 language: sv
 version: 0.0.2
+editorTabHeight: "_env:HITED_EDITOR_TAB_HEIGHT: 14" 
+editorNavigationHeight: "_env:HITED_EDITOR_NAVIGATION_HEIGHT: 100"
+editorPaletteHeight: "_env:HITED_EDITOR_PALETTE_HEIGHT: 100"
+editorModelHeight: "_env:HITED_EDITOR_MODEL_HEIGHT: 600"

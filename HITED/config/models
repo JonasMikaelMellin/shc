@@ -68,3 +68,13 @@ Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived
     userId UserId Maybe sqltype=varchar(255) default=NULL
     deriving Eq
     deriving Show
+
+ModellingPalette json
+    toolName Text sqltype=varchar(255)
+    fileName Text sqltype=varchar(255)
+
+ProjectUserState json
+    userId UserId sqltype=varchar(255)
+    projectId ProjectId sqltype=varchar(255)
+    selectedModellingTool ModellingPaletteId sqltype=varchar(255)
+    
