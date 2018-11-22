@@ -49,8 +49,13 @@ $else
         <p .text-muted>
             #{appCopyright $ appSettings master}
         <p>
-            Finansiärer: &nbsp; &nbsp;
             <img src="http://www.his.se/Static/Images/HIS_SE_LOGO_WEB-SV.png" height="137" width="137">
             &nbsp;
             &nbsp;
-            <img src="https://tillvaxtverket.se/images/18.661748141551692c5bea8fbc/1468404368868/EUlogo_c_RGB.jpg" height="137" width="137">
+            <img src="https://tillvaxtverket.se/images/18.661748141551692c5bea8fbc/1468404368868/EUlogo_c_RGB.jpg" height="140" width="140">
+            &nbsp;
+            &nbsp;
+            <img src="https://www.skaraborg.se/globalassets/bilder-nytt-format-2014/623x355-gamalt/logotype-skfb.jpg" height="140" width="245">
+            &nbsp;
+            &nbsp;
+            <img src=@{StaticR pictures_VG_rgb_png} height="137" width="550">

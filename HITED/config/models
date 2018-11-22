@@ -70,11 +70,21 @@ Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived
     deriving Show
 
 ModellingPalette json
-    toolName Text sqltype=varchar(255)
-    fileName Text sqltype=varchar(255)
+    modellingToolName Text sqltype=varchar(255)
+    modellingFileName Text sqltype=varchar(255)
+
+ExperimentalPalette json
+    experimentalToolName Text sqltype=varchar(255)
+    experimentalFileName Text sqltype=varchar(255)
 
 ProjectUserState json
     userId UserId sqltype=varchar(255)
     projectId ProjectId sqltype=varchar(255)
+    UniqueUserProject userId projectId
     selectedModellingTool ModellingPaletteId sqltype=varchar(255)
-    
+    selectedExperimentalTool ExperimentalPaletteId sqltype=varchar(255)
+    modellingToolX Int
+    modellingToolY Int
+    experimentalToolX Int
+    experimentalToolY Int
+    currentVersion Int

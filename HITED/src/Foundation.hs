@@ -287,15 +287,15 @@ instance YesodBreadcrumbs App where
       return (t, Nothing)
     breadcrumb EditorR = do
       t <- getBreadcumbTextFromAppMessage MsgNBEditor
-      return (t, Just HomeR)
-    breadcrumb (AuthR _) = do
+      return (t, Just HomeR) 
+    breadcrumb (AuthR _) = do  
       t <- getBreadcumbTextFromAppMessage MsgNBLogin
       return (t, Just HomeR)
     breadcrumb ProfileR = do
-      t <- getBreadcumbTextFromAppMessage MsgNBProfile
-      return (t, Just HomeR)
-    breadcrumb ProjectListR = do            
-      t <- getBreadcumbTextFromAppMessage MsgNBProjectList 
+      t <- getBreadcumbTextFromAppMessage MsgNBProfile  
+      return (t, Just HomeR) 
+    breadcrumb ProjectListR = do              
+      t <- getBreadcumbTextFromAppMessage MsgNBProjectList  
       return (t, Just HomeR) 
     breadcrumb TeamR = do
       t <- getBreadcumbTextFromAppMessage MsgNBTeamManagement
